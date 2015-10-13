@@ -1,0 +1,12 @@
+Makefile
+UIstuff.cbp
+UIstuff.workspace
+addons.make
+config.make
+obj/
+bin/UIstuff
+bin/UIstuff_debug
+bin/data/.gitkeep
+bin/data/settings.xml
+bin/libs/
+src/group.h
