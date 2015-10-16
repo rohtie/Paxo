@@ -14,6 +14,11 @@ class sphere: public distanceField {
     public:
         float radius;
 
+        sphere() {
+            position = ofVec3f(0.0, 0.0, 0.0);
+            radius = 1.0;
+        }
+
         sphere(ofVec3f _position, float _radius) {
             position = _position;
             radius = _radius;

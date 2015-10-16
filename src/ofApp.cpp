@@ -2,44 +2,41 @@
 #include "distanceField.h"
 
 void ofApp::setup() {
-	// Normalize texture coordinates so that they are within 0 to 1 range
-	ofDisableArbTex();
+    // Normalize texture coordinates so that they are within 0 to 1 range
+    ofDisableArbTex();
 
     iChannel0.loadImage("tex11.png");
 
     // Make sure textures can be repeated
     ofSetTextureWrap(GL_REPEAT, GL_REPEAT);
 
-    // Setup shader
-    sphere testSphere(ofVec3f(1.24, 0.1, -0.5), 1.0);
+    compileDistanceFieldShader();
+}
 
+void ofApp::update() {
+    compileDistanceFieldShader();
+}
+
+void ofApp::draw() {
+    render(ofGetWidth(), ofGetHeight());
+}
+
+/**
+ * Compile distance field shader from string.
+ */
+void ofApp::compileDistanceFieldShader() {
     std::stringstream distanceFieldMap;
     distanceFieldMap
         << "float map(vec3 point) {\n"
         << "    return " << testSphere.toString() << ";\n"
         << "}\n";
 
-    compileDistanceFieldShader(distanceFieldMap.str());
-}
-
-void ofApp::update() {
-
-}
-
-void ofApp::draw() {
-	render(ofGetWidth(), ofGetHeight());
-}
-
-/**
- * Compile distance field shader from string.
- */
-void ofApp::compileDistanceFieldShader(string distanceFieldMap) {
     std::stringstream shaderSource;
 
     shaderSource
         << shaderHeader
         << distanceFieldPrimitives
-        << distanceFieldMap
+        << distanceFieldMap.str()
         << raymarchingFramework;
 
     shader.setupShaderFromFile(GL_VERTEX_SHADER, "shad.vert");
@@ -87,17 +84,42 @@ void ofApp::saveRender(int width, int height) {
 }
 
 void ofApp::keyPressed(int key) {
-	switch (key) {
-		case 's':
-			saveRender(7680, 4320);
-			break;
+    switch (key) {
+        case 'w':
+            testSphere.position += ofVec3f(0.0, 0.0, -0.05);
+            break;
 
-		case 'f':
-			ofImage screenshot;
-			screenshot.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
-			screenshot.saveImage("screenshot.png");
-			break;
-	}
+        case 's':
+            testSphere.position += ofVec3f(0.0, 0.0, 0.05);
+            break;
+
+        case 'a':
+            testSphere.position += ofVec3f(-0.05, 0.0, 0.0);
+            break;
+
+        case 'd':
+            testSphere.position += ofVec3f(0.05, 0.0, 0.0);
+            break;
+
+        case 'q':
+            testSphere.position += ofVec3f(0.0, -0.05, 0.0);
+            break;
+
+        case 'e':
+            testSphere.position += ofVec3f(0.0, 0.05, 0.0);
+            break;
+
+
+        case 'p':
+            saveRender(7680, 4320);
+            break;
+
+        case 'o':
+            ofImage screenshot;
+            screenshot.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+            screenshot.saveImage("screenshot.png");
+            break;
+    }
 }
 
 void ofApp::keyReleased(int key) {

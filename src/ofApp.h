@@ -1,14 +1,16 @@
 #pragma once
 #include "ofMain.h"
+#include "distanceField.h"
 
 class ofApp : public ofBaseApp{
 	public:
 		ofShader shader;
 		ofImage iChannel0;
+		sphere testSphere;
 
 		void saveRender(int width, int height);
 		void render(int width, int height);
-		void compileDistanceFieldShader(string distanceFieldMap);
+		void compileDistanceFieldShader();
 
 		void setup();
 		void update();
