@@ -49,3 +49,25 @@ class plane: public distanceField {
             return distanceField.str();
         }
 };
+
+class box: public distanceField {
+    public:
+        ofVec3f dimensions;
+
+        box() {
+            position = ofVec3f(0.0, 0.0, 0.0);
+            dimensions = ofVec3f(1.0, 1.0, 1.0);
+        }
+
+        box(ofVec3f _position, ofVec3f _dimensions) {
+            position = _position;
+            dimensions = _dimensions;
+        }
+
+        string toString() {
+            std::stringstream distanceField;
+            distanceField << "box(point - vec3(" << position << "), vec3(" << dimensions << "))";
+
+            return distanceField.str();
+        }
+};
