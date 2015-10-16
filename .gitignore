@@ -1,12 +1,11 @@
 Makefile
-UIstuff.cbp
-UIstuff.workspace
-addons.make
-config.make
+*.cbp
+*.workspace
+*.make
 obj/
-bin/UIstuff
-bin/UIstuff_debug
+
+# Ignore all of bin/ except bin/data/
+!bin/
+bin/*
+!bin/data/
 bin/data/.gitkeep
-bin/data/settings.xml
-bin/libs/
-src/group.h
