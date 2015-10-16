@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "distanceField.h"
 
 void ofApp::setup() {
 	// Normalize texture coordinates so that they are within 0 to 1 range
@@ -9,12 +10,16 @@ void ofApp::setup() {
     // Make sure textures can be repeated
     ofSetTextureWrap(GL_REPEAT, GL_REPEAT);
 
-    string distanceFieldMap =
-        "float map(vec3 point) {\n"
-        "    return sphere(point - vec3(mouse * 0.5, 0.0), 1.0);\n"
-        "}\n";
+    // Setup shader
+    sphere testSphere(ofVec3f(1.24, 0.1, -0.5), 1.0);
 
-    compileDistanceFieldShader(distanceFieldMap);
+    std::stringstream distanceFieldMap;
+    distanceFieldMap
+        << "float map(vec3 point) {\n"
+        << "    return " << testSphere.toString() << ";\n"
+        << "}\n";
+
+    compileDistanceFieldShader(distanceFieldMap.str());
 }
 
 void ofApp::update() {
