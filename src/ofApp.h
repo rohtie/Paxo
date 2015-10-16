@@ -8,6 +8,7 @@ class ofApp : public ofBaseApp{
 
 		void saveRender(int width, int height);
 		void render(int width, int height);
+		void compileDistanceFieldShader(string distanceFieldMap);
 
 		void setup();
 		void update();
@@ -23,3 +24,10 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 };
+
+#if !defined(SHADER_INCLUDES)
+#define SHADER_INCLUDES 1
+const string shaderHeader 			 = "#pragma include <header.frag>\n";
+const string distanceFieldPrimitives = "#pragma include <primitives.frag>\n";
+const string raymarchingFramework 	 = "#pragma include <raymarch.frag>\n";
+#endif

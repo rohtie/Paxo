@@ -9,7 +9,12 @@ void ofApp::setup() {
     // Make sure textures can be repeated
     ofSetTextureWrap(GL_REPEAT, GL_REPEAT);
 
-	shader.load("shad.vert", "shad.frag");
+    string distanceFieldMap =
+        "float map(vec3 point) {\n"
+        "    return sphere(point - vec3(mouse * 0.5, 0.0), 1.0);\n"
+        "}\n";
+
+    compileDistanceFieldShader(distanceFieldMap);
 }
 
 void ofApp::update() {
@@ -18,6 +23,24 @@ void ofApp::update() {
 
 void ofApp::draw() {
 	render(ofGetWidth(), ofGetHeight());
+}
+
+/**
+ * Compile distance field shader from string.
+ */
+void ofApp::compileDistanceFieldShader(string distanceFieldMap) {
+    std::stringstream shaderSource;
+
+    shaderSource
+        << shaderHeader
+        << distanceFieldPrimitives
+        << distanceFieldMap
+        << raymarchingFramework;
+
+    shader.setupShaderFromFile(GL_VERTEX_SHADER, "shad.vert");
+    shader.setupShaderFromSource(GL_FRAGMENT_SHADER, shaderSource.str());
+    shader.bindDefaults();
+    shader.linkProgram();
 }
 
 /**
