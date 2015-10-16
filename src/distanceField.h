@@ -31,3 +31,21 @@ class sphere: public distanceField {
             return distanceField.str();
         }
 };
+
+class plane: public distanceField {
+    public:
+        plane() {
+            position = ofVec3f(0.0, 0.0, 0.0);
+        }
+
+        plane(ofVec3f _position) {
+            position = _position;
+        }
+
+        string toString() {
+            std::stringstream distanceField;
+            distanceField << "plane(point - vec3(" << position << "))";
+
+            return distanceField.str();
+        }
+};
