@@ -18,4 +18,6 @@ Then in the app directory execute the following:
     git init
     git remote add origin git@github.com:rohtie/Paxo.git
     git fetch
+    git reset origin/master
+    git checkout .
 
