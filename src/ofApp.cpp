@@ -5,7 +5,7 @@ void ofApp::setup() {
     // Normalize texture coordinates so that they are within 0 to 1 range
     ofDisableArbTex();
 
-    iChannel0.loadImage("tex11.png");
+    tex0.loadImage("tex11.png");
 
     // Make sure textures can be repeated
     ofSetTextureWrap(GL_REPEAT, GL_REPEAT);
@@ -50,7 +50,7 @@ void ofApp::compileDistanceFieldShader() {
  */
 void ofApp::render(int width, int height) {
     shader.begin();
-    shader.setUniformTexture("tex0", iChannel0.getTextureReference(), 0);
+    shader.setUniformTexture("tex0", tex0.getTextureReference(), 0);
     shader.setUniform1f("time", ofGetElapsedTimef());
     shader.setUniform2f("resolution", width, height);
     shader.setUniform2f("mouse", mouseX / (float) width, 1.0f - mouseY / (float) height);

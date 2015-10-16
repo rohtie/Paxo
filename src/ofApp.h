@@ -5,7 +5,7 @@
 class ofApp : public ofBaseApp{
 	public:
 		ofShader shader;
-		ofImage iChannel0;
+		ofImage tex0;
 		sphere testSphere;
 
 		void saveRender(int width, int height);
