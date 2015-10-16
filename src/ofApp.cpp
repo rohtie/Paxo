@@ -2,6 +2,9 @@
 #include "distanceField.h"
 
 void ofApp::setup() {
+    sidebarWidth = 300;
+    sidebarBrightness = 64;
+
     // Normalize texture coordinates so that they are within 0 to 1 range
     ofDisableArbTex();
 
@@ -18,7 +21,13 @@ void ofApp::update() {
 }
 
 void ofApp::draw() {
-    render(ofGetWidth(), ofGetHeight());
+    int width = ofGetWidth(), height = ofGetHeight();
+    int sceneWidth = width - sidebarWidth;
+
+    render(sceneWidth, height);
+
+    ofSetColor(sidebarBrightness);
+    ofRect(sceneWidth, 0, width - sceneWidth, height);
 }
 
 /**

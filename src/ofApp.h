@@ -8,6 +8,9 @@ class ofApp : public ofBaseApp{
 		ofImage tex0;
 		sphere testSphere;
 
+		int sidebarWidth;
+		int sidebarBrightness;
+
 		void saveRender(int width, int height);
 		void render(int width, int height);
 		void compileDistanceFieldShader();
