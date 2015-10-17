@@ -4,6 +4,9 @@
 void ofApp::setup() {
     sidebarWidth = 300;
     sidebarBrightness = 64;
+    palanquinRegularBrightness = 200;
+
+    palanquinRegular.loadFont("Palanquin-Thin.ttf", 15);
 
     // Normalize texture coordinates so that they are within 0 to 1 range
     ofDisableArbTex();
@@ -28,6 +31,9 @@ void ofApp::draw() {
 
     ofSetColor(sidebarBrightness);
     ofRect(sceneWidth, 0, width - sceneWidth, height);
+
+    ofSetColor(palanquinRegularBrightness);
+    palanquinRegular.drawString("SPHERE", sceneWidth + 15, 30);
 }
 
 /**

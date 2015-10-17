@@ -4,12 +4,15 @@
 
 class ofApp : public ofBaseApp{
 	public:
+		ofTrueTypeFont palanquinRegular;
+
 		ofShader shader;
 		ofImage tex0;
 		sphere testSphere;
 
 		int sidebarWidth;
 		int sidebarBrightness;
+		int palanquinRegularBrightness;
 
 		void saveRender(int width, int height);
 		void render(int width, int height);
