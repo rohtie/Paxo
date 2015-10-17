@@ -93,31 +93,15 @@ void ofApp::saveRender(int width, int height) {
 }
 
 void ofApp::keyPressed(int key) {
+    float stepSize = 0.05;
+
     switch (key) {
-        case 'w':
-            testSphere.position += ofVec3f(0.0, 0.0, -0.05);
-            break;
-
-        case 's':
-            testSphere.position += ofVec3f(0.0, 0.0, 0.05);
-            break;
-
-        case 'a':
-            testSphere.position += ofVec3f(-0.05, 0.0, 0.0);
-            break;
-
-        case 'd':
-            testSphere.position += ofVec3f(0.05, 0.0, 0.0);
-            break;
-
-        case 'q':
-            testSphere.position += ofVec3f(0.0, -0.05, 0.0);
-            break;
-
-        case 'e':
-            testSphere.position += ofVec3f(0.0, 0.05, 0.0);
-            break;
-
+        case 'w': testSphere.position.z -= stepSize; break;
+        case 's': testSphere.position.z += stepSize; break;
+        case 'a': testSphere.position.x -= stepSize; break;
+        case 'd': testSphere.position.x += stepSize; break;
+        case 'e': testSphere.position.y -= stepSize; break;
+        case 'q': testSphere.position.y += stepSize; break;
 
         case 'p':
             saveRender(7680, 4320);
