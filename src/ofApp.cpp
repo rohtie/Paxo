@@ -6,7 +6,7 @@ void ofApp::setup() {
     sidebarBrightness = 64;
     palanquinRegularBrightness = 200;
 
-    palanquinRegular.loadFont("Palanquin-Thin.ttf", 15);
+    palanquinRegular.loadFont("Palanquin-Regular.ttf", 15);
 
     // Normalize texture coordinates so that they are within 0 to 1 range
     ofDisableArbTex();
@@ -29,11 +29,15 @@ void ofApp::draw() {
 
     render(sceneWidth, height);
 
+    // Render sidebar
     ofSetColor(sidebarBrightness);
     ofRect(sceneWidth, 0, width - sceneWidth, height);
 
+    // Display FPS
+    std::stringstream fps;
+    fps << round(ofGetFrameRate()) << " FPS";
     ofSetColor(palanquinRegularBrightness);
-    palanquinRegular.drawString("SPHERE", sceneWidth + 15, 30);
+    palanquinRegular.drawString(fps.str(), sceneWidth - 15*6, 30);
 }
 
 /**
