@@ -8,8 +8,7 @@ void ofApp::setup() {
 
     palanquinRegular.loadFont("Palanquin-Regular.ttf", 15);
 
-    selectedDistanceField = distancePtr(new sphere(ofVec3f(-2.0, 0.0, 0.0),
-                                                   0.5));
+    selectedDistanceField = distancePtr(new sphere(ofVec3f(-2.0, 0.0, 0.0), 0.5));
 
     distanceFields.push_back(selectedDistanceField);
     distanceFields.push_back(distancePtr(new plane(ofVec3f(0.0, -1.0, 0.0))));
@@ -42,7 +41,7 @@ void ofApp::draw() {
     ofRect(sceneWidth, 0, width - sceneWidth, height);
 
     // Display FPS
-    std::stringstream fps;
+    stringstream fps;
     fps << round(ofGetFrameRate()) << " FPS";
     ofSetColor(palanquinRegularBrightness);
     palanquinRegular.drawString(fps.str(), sceneWidth - 15*6, 30);
@@ -55,7 +54,7 @@ void ofApp::draw() {
  */
 string ofApp::generateDistanceString(int index) {
     if (index < distanceFields.size() - 1) {
-        std::stringstream distanceFieldMap;
+        stringstream distanceFieldMap;
         distanceFieldMap
             << "min(" << distanceFields[index]->toString() << ", "
                       << generateDistanceString(index + 1)
@@ -71,13 +70,13 @@ string ofApp::generateDistanceString(int index) {
  * Compile distance field shader from string.
  */
 void ofApp::compileDistanceFieldShader() {
-    std::stringstream distanceFieldMap;
+    stringstream distanceFieldMap;
     distanceFieldMap
         << "float map(vec3 point) {\n"
         << "    return " << generateDistanceString(0) << ";\n"
         << "}\n";
 
-    std::stringstream shaderSource;
+    stringstream shaderSource;
 
     shaderSource
         << shaderHeader

@@ -25,7 +25,7 @@ class sphere: public distanceField {
         }
 
         string toString() {
-            std::stringstream distanceField;
+            stringstream distanceField;
             distanceField << "sphere(point - vec3(" << position << "), " << radius << ")";
 
             return distanceField.str();
@@ -43,7 +43,7 @@ class plane: public distanceField {
         }
 
         string toString() {
-            std::stringstream distanceField;
+            stringstream distanceField;
             distanceField << "plane(point - vec3(" << position << "))";
 
             return distanceField.str();
@@ -65,7 +65,7 @@ class box: public distanceField {
         }
 
         string toString() {
-            std::stringstream distanceField;
+            stringstream distanceField;
             distanceField << "box(point - vec3(" << position << "), vec3(" << dimensions << "))";
 
             return distanceField.str();
