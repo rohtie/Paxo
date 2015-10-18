@@ -2,21 +2,25 @@
 #include "ofMain.h"
 #include "distanceField.h"
 
+typedef ofPtr<distanceField> distancePtr;
+
 class ofApp : public ofBaseApp{
 	public:
 		ofTrueTypeFont palanquinRegular;
 
 		ofShader shader;
 		ofImage tex0;
-		ofPtr<distanceField> selectedDistanceField;
+		distancePtr selectedDistanceField;
+		vector< distancePtr > distanceFields;
 
 		int sidebarWidth;
 		int sidebarBrightness;
 		int palanquinRegularBrightness;
 
-		void saveRender(int width, int height);
-		void render(int width, int height);
+		string generateDistanceString(int index);
 		void compileDistanceFieldShader();
+		void render(int width, int height);
+		void saveRender(int width, int height);
 
 		void setup();
 		void update();

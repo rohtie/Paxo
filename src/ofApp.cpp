@@ -8,7 +8,13 @@ void ofApp::setup() {
 
     palanquinRegular.loadFont("Palanquin-Regular.ttf", 15);
 
-    selectedDistanceField = ofPtr<distanceField>(new sphere());
+    selectedDistanceField = distancePtr(new sphere(ofVec3f(-2.0, 0.0, 0.0),
+                                                   0.5));
+
+    distanceFields.push_back(selectedDistanceField);
+    distanceFields.push_back(distancePtr(new plane(ofVec3f(0.0, -1.0, 0.0))));
+    distanceFields.push_back(distancePtr(new box(ofVec3f(2.0, 0.0, -2.0),
+                                                 ofVec3f(0.2, 1.0, 1.5))));
 
     // Normalize texture coordinates so that they are within 0 to 1 range
     ofDisableArbTex();
@@ -43,13 +49,32 @@ void ofApp::draw() {
 }
 
 /**
+ * Generate string of distance fields.
+ *
+ * Recursive function which generates an union of all distance fields.
+ */
+string ofApp::generateDistanceString(int index) {
+    if (index < distanceFields.size() - 1) {
+        std::stringstream distanceFieldMap;
+        distanceFieldMap
+            << "min(" << distanceFields[index]->toString() << ", "
+                      << generateDistanceString(index + 1)
+            << ")";
+
+        return distanceFieldMap.str();
+    }
+
+    return distanceFields[index]->toString();
+}
+
+/**
  * Compile distance field shader from string.
  */
 void ofApp::compileDistanceFieldShader() {
     std::stringstream distanceFieldMap;
     distanceFieldMap
         << "float map(vec3 point) {\n"
-        << "    return " << selectedDistanceField->toString() << ";\n"
+        << "    return " << generateDistanceString(0) << ";\n"
         << "}\n";
 
     std::stringstream shaderSource;
