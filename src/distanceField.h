@@ -7,7 +7,7 @@ class distanceField {
         ofVec3f scale;
         ofVec3f rotation;
 
-        string toString();
+        virtual string toString() = 0;
 };
 
 class sphere: public distanceField {

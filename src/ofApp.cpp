@@ -8,6 +8,8 @@ void ofApp::setup() {
 
     palanquinRegular.loadFont("Palanquin-Regular.ttf", 15);
 
+    selectedDistanceField = ofPtr<distanceField>(new sphere());
+
     // Normalize texture coordinates so that they are within 0 to 1 range
     ofDisableArbTex();
 
@@ -47,7 +49,7 @@ void ofApp::compileDistanceFieldShader() {
     std::stringstream distanceFieldMap;
     distanceFieldMap
         << "float map(vec3 point) {\n"
-        << "    return " << testSphere.toString() << ";\n"
+        << "    return " << selectedDistanceField->toString() << ";\n"
         << "}\n";
 
     std::stringstream shaderSource;
@@ -106,12 +108,12 @@ void ofApp::keyPressed(int key) {
     float stepSize = 0.05;
 
     switch (key) {
-        case 'w': testSphere.position.z -= stepSize; break;
-        case 's': testSphere.position.z += stepSize; break;
-        case 'a': testSphere.position.x -= stepSize; break;
-        case 'd': testSphere.position.x += stepSize; break;
-        case 'e': testSphere.position.y -= stepSize; break;
-        case 'q': testSphere.position.y += stepSize; break;
+        case 'w': selectedDistanceField->position.z -= stepSize; break;
+        case 's': selectedDistanceField->position.z += stepSize; break;
+        case 'a': selectedDistanceField->position.x -= stepSize; break;
+        case 'd': selectedDistanceField->position.x += stepSize; break;
+        case 'e': selectedDistanceField->position.y -= stepSize; break;
+        case 'q': selectedDistanceField->position.y += stepSize; break;
 
         case 'p':
             saveRender(7680, 4320);

@@ -8,7 +8,7 @@ class ofApp : public ofBaseApp{
 
 		ofShader shader;
 		ofImage tex0;
-		sphere testSphere;
+		ofPtr<distanceField> selectedDistanceField;
 
 		int sidebarWidth;
 		int sidebarBrightness;
