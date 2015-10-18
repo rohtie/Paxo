@@ -52,13 +52,12 @@ void main() {
         vec3 point = cameraPosition + rayDirection * distance;
         vec3 normal = getNormal(point);
 
-        col += vec3(0.05, 0.01, 0.35) + sin(time) * 0.25;
+        col += vec3(0.05, 0.01, 0.35);
         col += vec3(0.7, 1.0, 0.95) * max(dot(normal, light), 0.0);
 
         vec3 halfVector = normalize(light + normal);
         col += vec3(1.0) * pow(max(dot(normal, halfVector), 0.0), 1024.0);
     }
 
-    col -= texture2D(tex0, point).rgb * 0.15;
     outputColor = vec4(col, 1.0);
 }
