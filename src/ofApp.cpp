@@ -10,7 +10,7 @@ void ofApp::setup() {
 
     palanquinRegular.loadFont("Palanquin-Regular.ttf", palanquinRegularSize);
 
-    selectedDistanceField = distancePtr(new sphere(ofVec3f(-2.0, 0.0, 0.0), 0.5));
+    selectedDistanceField = distancePtr(new sphere(ofVec3f(0.0, 0.0, 0.0), 0.5));
 
     distanceFields.push_back(selectedDistanceField);
     distanceFields.push_back(distancePtr(new plane(ofVec3f(0.0, -1.0, 0.0))));

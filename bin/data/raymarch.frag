@@ -33,10 +33,10 @@ vec3 getNormal(vec3 point) {
     ) - map(point));
 }
 
-vec3 light = normalize(vec3(0.0, 2.0, 3.0));
+vec3 light = normalize(vec3(1.5, 1.5, 2.5));
 
 void main() {
-   vec2 point = gl_FragCoord.xy;
+    vec2 point = gl_FragCoord.xy;
 
     point /= resolution.xy;
     point = 2.0 * point - 1.0;
@@ -52,11 +52,19 @@ void main() {
         vec3 point = cameraPosition + rayDirection * distance;
         vec3 normal = getNormal(point);
 
-        col += vec3(0.05, 0.01, 0.35);
+        // Diffuse
         col += vec3(0.7, 1.0, 0.95) * max(dot(normal, light), 0.0);
 
+        // Specular
         vec3 halfVector = normalize(light + normal);
-        col += vec3(1.0) * pow(max(dot(normal, halfVector), 0.0), 1024.0);
+        col += pow(max(dot(normal, halfVector), 0.0), 1024.0);
+
+        // Attenuation
+        float attenuation = clamp(1.0 - length(light - point) / 20.0, 0.0, 1.0);
+        col *= attenuation * attenuation;
+
+        // Ambient
+        col += vec3(0.01, 0.01, 0.3);
     }
 
     outputColor = vec4(col, 1.0);
