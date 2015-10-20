@@ -7,6 +7,7 @@ typedef ofPtr<distanceField> distancePtr;
 class ofApp : public ofBaseApp{
 	public:
 		ofTrueTypeFont palanquinRegular;
+		int palanquinRegularSize;
 
 		ofShader shader;
 		ofImage tex0;
@@ -14,6 +15,7 @@ class ofApp : public ofBaseApp{
 		vector< distancePtr > distanceFields;
 
 		int sidebarWidth;
+		int sidebarItemHeight;
 		int sidebarBrightness;
 		int palanquinRegularBrightness;
 

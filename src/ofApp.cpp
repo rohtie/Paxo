@@ -3,10 +3,12 @@
 
 void ofApp::setup() {
     sidebarWidth = 300;
+    sidebarItemHeight = 42;
     sidebarBrightness = 64;
     palanquinRegularBrightness = 200;
+    palanquinRegularSize = 15;
 
-    palanquinRegular.loadFont("Palanquin-Regular.ttf", 15);
+    palanquinRegular.loadFont("Palanquin-Regular.ttf", palanquinRegularSize);
 
     selectedDistanceField = distancePtr(new sphere(ofVec3f(-2.0, 0.0, 0.0), 0.5));
 
@@ -41,20 +43,24 @@ void ofApp::draw() {
     ofRect(sceneWidth, 0, width - sceneWidth, height);
 
     for (uint i = 0; i < distanceFields.size(); i++) {
-        int y = i * 42;
+        int y = i * sidebarItemHeight;
 
         ofSetColor(sidebarBrightness + 25);
-        ofRect(sceneWidth, y, width - sceneWidth, 40);
+        ofRect(sceneWidth, y, sidebarWidth, sidebarItemHeight - 2);
 
         ofSetColor(25);
-        palanquinRegular.drawString(distanceFields[i]->getName(), sceneWidth + 40, y + 42 - 15);
+        palanquinRegular.drawString(distanceFields[i]->getName(),
+                                    sceneWidth + 40,
+                                    y + sidebarItemHeight - palanquinRegularSize);
     }
 
     // Display FPS
     stringstream fps;
     fps << round(ofGetFrameRate()) << " FPS";
     ofSetColor(palanquinRegularBrightness);
-    palanquinRegular.drawString(fps.str(), sceneWidth - 15*6, 30);
+    palanquinRegular.drawString(fps.str(),
+                                sceneWidth - palanquinRegularSize*6,
+                                palanquinRegularSize * 2);
 }
 
 /**
@@ -174,7 +180,16 @@ void ofApp::mouseDragged(int x, int y, int button) {
 }
 
 void ofApp::mousePressed(int x, int y, int button) {
+    int sceneWidth = ofGetWidth() - sidebarWidth;
 
+    for (uint i = 0; i < distanceFields.size(); i++) {
+        ofRectangle panel(sceneWidth, i * sidebarItemHeight,
+                          sidebarWidth, sidebarItemHeight);
+
+        if (panel.inside(x, y)) {
+            selectedDistanceField = distanceFields[i];
+        }
+    }
 }
 
 void ofApp::mouseReleased(int x, int y, int button) {
