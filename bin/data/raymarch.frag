@@ -23,6 +23,23 @@ float intersect(vec3 rayOrigin, vec3 rayDirection) {
     return distance;
 }
 
+float softshadow(vec3 point, vec3 light, float minDistance, float maxDistance, float smoothness) {
+    float shadow = 1.0;
+
+    for (float distance = minDistance; distance < maxDistance;) {
+        float currentDistance = map(point + light * distance);
+
+        if (currentDistance < 0.001) {
+            return 0.0;
+        }
+
+        shadow = min(shadow, smoothness * currentDistance / distance);
+        distance += currentDistance;
+    }
+
+    return shadow;
+}
+
 vec3 getNormal(vec3 point) {
     vec2 extraPolate = vec2(0.002, 0.0);
 
@@ -59,9 +76,9 @@ void main() {
         vec3 halfVector = normalize(light + normal);
         col += pow(max(dot(normal, halfVector), 0.0), 1024.0);
 
-        // Attenuation
+        // Attenuation and shadow
         float attenuation = clamp(1.0 - length(light - point) / 20.0, 0.0, 1.0);
-        col *= attenuation * attenuation;
+        col *= attenuation * attenuation * softshadow(point, light, 0.02, 2.5, 8.0);
 
         // Ambient
         col += vec3(0.01, 0.01, 0.3);
