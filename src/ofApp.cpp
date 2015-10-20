@@ -40,6 +40,16 @@ void ofApp::draw() {
     ofSetColor(sidebarBrightness);
     ofRect(sceneWidth, 0, width - sceneWidth, height);
 
+    for (uint i = 0; i < distanceFields.size(); i++) {
+        int y = i * 42;
+
+        ofSetColor(sidebarBrightness + 25);
+        ofRect(sceneWidth, y, width - sceneWidth, 40);
+
+        ofSetColor(25);
+        palanquinRegular.drawString(distanceFields[i]->getName(), sceneWidth + 40, y + 42 - 15);
+    }
+
     // Display FPS
     stringstream fps;
     fps << round(ofGetFrameRate()) << " FPS";
@@ -52,7 +62,7 @@ void ofApp::draw() {
  *
  * Recursive function which generates an union of all distance fields.
  */
-string ofApp::generateDistanceString(int index) {
+string ofApp::generateDistanceString(uint index) {
     if (index < distanceFields.size() - 1) {
         stringstream distanceFieldMap;
         distanceFieldMap

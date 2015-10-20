@@ -8,6 +8,7 @@ class distanceField {
         ofVec3f rotation;
 
         virtual string toString() = 0;
+        virtual string getName() = 0;
 };
 
 class sphere: public distanceField {
@@ -30,6 +31,10 @@ class sphere: public distanceField {
 
             return distanceField.str();
         }
+
+        string getName() {
+            return "SPHERE";
+        }
 };
 
 class plane: public distanceField {
@@ -47,6 +52,10 @@ class plane: public distanceField {
             distanceField << "plane(point - vec3(" << position << "))";
 
             return distanceField.str();
+        }
+
+        string getName() {
+            return "PLANE";
         }
 };
 
@@ -69,5 +78,9 @@ class box: public distanceField {
             distanceField << "box(point - vec3(" << position << "), vec3(" << dimensions << "))";
 
             return distanceField.str();
+        }
+
+        string getName() {
+            return "BOX";
         }
 };
