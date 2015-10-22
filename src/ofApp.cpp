@@ -10,11 +10,11 @@ void ofApp::setup() {
 
     palanquinRegular.loadFont("Palanquin-Regular.ttf", palanquinRegularSize);
 
-    selectedDistanceField = distancePtr(new sphere(ofVec3f(0.0, 0.0, 0.0), 0.5));
+    selectedDistanceField = distancePtr(new sphere(ofVec3f(0.2, 0.5, 0.0), 0.5));
 
     distanceFields.push_back(selectedDistanceField);
     distanceFields.push_back(distancePtr(new plane(ofVec3f(0.0, -1.0, 0.0))));
-    distanceFields.push_back(distancePtr(new box(ofVec3f(2.0, 0.0, -2.0),
+    distanceFields.push_back(distancePtr(new box(ofVec3f(1.0, 0.0, -2.0),
                                                  ofVec3f(0.2, 1.0, 1.5))));
 
     // Normalize texture coordinates so that they are within 0 to 1 range
@@ -72,9 +72,9 @@ string ofApp::generateDistanceString(uint index) {
     if (index < distanceFields.size() - 1) {
         stringstream distanceFieldMap;
         distanceFieldMap
-            << "min(" << distanceFields[index]->toString() << ", "
+            << "smin(" << distanceFields[index]->toString() << ", "
                       << generateDistanceString(index + 1)
-            << ")";
+            << ", 1.0)";
 
         return distanceFieldMap.str();
     }
@@ -97,6 +97,7 @@ void ofApp::compileDistanceFieldShader() {
     shaderSource
         << shaderHeader
         << distanceFieldPrimitives
+        << distanceFieldOperations
         << distanceFieldMap.str()
         << raymarchingFramework;
 

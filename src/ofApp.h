@@ -43,5 +43,6 @@ class ofApp : public ofBaseApp{
 #define SHADER_INCLUDES 1
 const string shaderHeader 			 = "#pragma include <header.frag>\n";
 const string distanceFieldPrimitives = "#pragma include <primitives.frag>\n";
+const string distanceFieldOperations = "#pragma include <operations.frag>\n";
 const string raymarchingFramework 	 = "#pragma include <raymarch.frag>\n";
 #endif
