@@ -45,7 +45,13 @@ void ofApp::draw() {
     for (uint i = 0; i < distanceFields.size(); i++) {
         int y = i * sidebarItemHeight;
 
-        ofSetColor(sidebarBrightness + 25);
+        if (distanceFields[i] == selectedDistanceField) {
+            ofSetColor(sidebarBrightness + 50);
+        }
+        else {
+            ofSetColor(sidebarBrightness + 25);
+        }
+
         ofRect(sceneWidth, y, sidebarWidth, sidebarItemHeight - 2);
 
         ofSetColor(25);
