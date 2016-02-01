@@ -19,7 +19,7 @@ class ofApp : public ofBaseApp{
 		int sidebarBrightness;
 		int palanquinRegularBrightness;
 
-		string generateDistanceString(uint index);
+		string generateDistanceString(int index);
 		void compileDistanceFieldShader();
 		void render(int width, int height);
 		void saveRender(int width, int height);

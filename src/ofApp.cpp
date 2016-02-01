@@ -8,7 +8,7 @@ void ofApp::setup() {
     palanquinRegularBrightness = 200;
     palanquinRegularSize = 15;
 
-    palanquinRegular.loadFont("Palanquin-Regular.ttf", palanquinRegularSize);
+    palanquinRegular.load("Palanquin-Regular.ttf", palanquinRegularSize);
 
     selectedDistanceField = distancePtr(new sphere(ofVec3f(0.2, 0.5, 0.0), 0.5));
 
@@ -20,10 +20,10 @@ void ofApp::setup() {
     // Normalize texture coordinates so that they are within 0 to 1 range
     ofDisableArbTex();
 
-    tex0.loadImage("tex11.png");
+    tex0.load("tex11.png");
 
-    // Make sure textures can be repeated
-    ofSetTextureWrap(GL_REPEAT, GL_REPEAT);
+    // Make sure the texture can be repeated
+    tex0.getTexture().setTextureWrap(GL_REPEAT, GL_REPEAT);
 
     compileDistanceFieldShader();
 }
@@ -40,9 +40,9 @@ void ofApp::draw() {
 
     // Render sidebar
     ofSetColor(sidebarBrightness);
-    ofRect(sceneWidth, 0, width - sceneWidth, height);
+    ofDrawRectangle(sceneWidth, 0, width - sceneWidth, height);
 
-    for (uint i = 0; i < distanceFields.size(); i++) {
+    for (int i = 0; i < distanceFields.size(); i++) {
         int y = i * sidebarItemHeight;
 
         if (distanceFields[i] == selectedDistanceField) {
@@ -52,7 +52,7 @@ void ofApp::draw() {
             ofSetColor(sidebarBrightness + 25);
         }
 
-        ofRect(sceneWidth, y, sidebarWidth, sidebarItemHeight - 2);
+        ofDrawRectangle(sceneWidth, y, sidebarWidth, sidebarItemHeight - 2);
 
         ofSetColor(25);
         palanquinRegular.drawString(distanceFields[i]->getName(),
@@ -74,7 +74,7 @@ void ofApp::draw() {
  *
  * Recursive function which generates an union of all distance fields.
  */
-string ofApp::generateDistanceString(uint index) {
+string ofApp::generateDistanceString(int index) {
     if (index < distanceFields.size() - 1) {
         stringstream distanceFieldMap;
         distanceFieldMap
@@ -118,11 +118,11 @@ void ofApp::compileDistanceFieldShader() {
  */
 void ofApp::render(int width, int height) {
     shader.begin();
-    shader.setUniformTexture("tex0", tex0.getTextureReference(), 0);
+    shader.setUniformTexture("tex0", tex0.getTexture(), 0);
     shader.setUniform1f("time", ofGetElapsedTimef());
     shader.setUniform2f("resolution", width, height);
     shader.setUniform2f("mouse", mouseX / (float) width, 1.0f - mouseY / (float) height);
-    ofRect(0, 0, width, height);
+    ofDrawRectangle(0, 0, width, height);
     shader.end();
 }
 
@@ -148,7 +148,7 @@ void ofApp::saveRender(int width, int height) {
     // to avoid that the saved image is upside down.
     image.mirror(true, false);
 
-    image.saveImage("render.png");
+    image.save("render.png");
 }
 
 void ofApp::keyPressed(int key) {
@@ -169,7 +169,7 @@ void ofApp::keyPressed(int key) {
         case 'o':
             ofImage screenshot;
             screenshot.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
-            screenshot.saveImage("screenshot.png");
+            screenshot.save("screenshot.png");
             break;
     }
 }
@@ -189,7 +189,7 @@ void ofApp::mouseDragged(int x, int y, int button) {
 void ofApp::mousePressed(int x, int y, int button) {
     int sceneWidth = ofGetWidth() - sidebarWidth;
 
-    for (uint i = 0; i < distanceFields.size(); i++) {
+    for (int i = 0; i < distanceFields.size(); i++) {
         ofRectangle panel(sceneWidth, i * sidebarItemHeight,
                           sidebarWidth, sidebarItemHeight);
 

@@ -7,8 +7,6 @@ Useful for experimental algorithmic art and demoscene productions that have size
 
 .. image:: http://i.imgur.com/CN7Sknl.png
 
-Built using openFrameworks 0.8.4 on Arch Linux x64.
-
 Thanks to Iñigo Quilez for his useful articles on distance functions and raymarching.
 
 Setup
